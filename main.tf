@@ -69,7 +69,7 @@ resource "vsphere_virtual_machine" "grafana-vm" {
 }
 
 output "guest_ip_address" {
-  value = vsphere_virtual_machine.grafana-vm.guest_ip_addresses[0]
+  value = vsphere_virtual_machine.grafana-vm.guest_ip_addresses
 }
 
 output "name" {
