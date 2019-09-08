@@ -8,9 +8,8 @@ data "vsphere_virtual_machine" "template" {
 }
 
 resource "vsphere_virtual_machine" "grafana-vm" {
-  name   = local.server_name
-  folder = var.folder
-
+  name             = local.server_name
+  folder           = var.folder
   resource_pool_id = var.resource_pool_id
   datastore_id     = var.datastore_id
   num_cpus         = 1
@@ -21,7 +20,6 @@ resource "vsphere_virtual_machine" "grafana-vm" {
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
     linked_clone  = true
-
     customize {
       linux_options {
         host_name = local.server_name
@@ -34,8 +32,8 @@ resource "vsphere_virtual_machine" "grafana-vm" {
 
   # https://www.terraform.io/docs/provisioners/connection.html#example-usage
   connection {
-    type = "ssh"
-    host     = self.guest_ip_addresses[0]
+    host     = self.default_ip_address
+    type     = "ssh"
     user     = "ubuntu"
     password = "ubuntu"
   }
